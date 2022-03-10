@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    private float moveSpeed = 2.0f;
+    public float moveSpeed = 2.0f;
     [SerializeField]
     private float jumpForce = 250f;
     
@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D playerRigidBody;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
 
     private float horizontalInput;
     private bool facingRight = true;
@@ -32,6 +34,9 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -39,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         //Get the movement input from the user
         horizontalInput = Input.GetAxis("Horizontal");
+        animator.SetFloat("speed", Mathf.Abs(horizontalInput));
         Flip(horizontalInput);
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -60,6 +66,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
   
     private void Flip(float movement)
     {
@@ -87,5 +94,17 @@ public class PlayerController : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void IncreaseSpeed()
+    {
+        StartCoroutine(SpeedIncrease());
+    }
+
+    IEnumerator SpeedIncrease()
+    {
+        moveSpeed = 5.0f;
+        yield return new WaitForSeconds(5.0f);
+        moveSpeed = 2.5f;
     }
 }
