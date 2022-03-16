@@ -17,6 +17,7 @@ public class Coin : MonoBehaviour
         {
             score.AddScore(1);
             Destroy(this.gameObject);
+            AudioManager.Instance.PlayMusic("Coin");
         }
     }
 }
