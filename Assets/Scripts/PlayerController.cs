@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    //private AudioSource source;
 
     private float horizontalInput;
     private bool facingRight = true;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
         playerRigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        //source = GetComponent<AudioSource>();
 
         //DontDestroyOnLoad(this.gameObject);
     }
@@ -48,7 +51,13 @@ public class PlayerController : MonoBehaviour
         Flip(horizontalInput);
 
         if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //source.volume = 0.25f;
+            //source.Play();
+            AudioManager.Instance.PlaySound("Jump", 0.25f);
             isJump = true;
+        }
+           
     }
 
     private void FixedUpdate()
